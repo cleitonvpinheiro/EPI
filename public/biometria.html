@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Coletor de Biometrias</title>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>Coletor de Biometrias</h1>
+        </header>
+
+        <main>
+            <section>
+                <h2>Registro de Biometria</h2>
+                <form id="biometriaForm">
+                    <label for="colaborador">Nome do Colaborador:</label>
+                    <input type="text" id="colaborador" name="colaborador" required>
+
+                    <label for="biometria">Biometria:</label>
+                    <input type="file" id="biometria" name="biometria" accept="image/*" required>
+
+                    <button type="submit">Registrar Biometria</button>
+                </form>
+            </section>
+
+            <section>
+                <h2>Lista de Biometrias Registradas</h2>
+                <ul id="biometriaList"></ul>
+            </section>
+        </main>
+    </div>
+
+    <script src="../src/biometria.js"></script>
+</body>
+
+</html>

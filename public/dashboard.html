@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Bem-vindo ao Dashboard</h1>
+        </header>
+        <p>Parabéns, você acessou o painel de controle!</p>
+        <button id="logoutButton">Sair</button>
+    </div>
+
+    <script>
+        // Verificação do token no início da página
+        const token = localStorage.getItem('token');
+        if (!token) {
+            // Redireciona para a tela de login se o token não existir
+            window.location.href = '/login.html';
+        }
+
+        // Lógica para logout
+        document.getElementById('logoutButton').addEventListener('click', () => {
+            localStorage.removeItem('token'); // Remove o token
+            window.location.href = '/login.html'; // Redireciona para a tela de login
+        });
+    </script>
+</body>
+</html>
