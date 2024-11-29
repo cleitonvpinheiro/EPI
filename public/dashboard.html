@@ -11,22 +11,52 @@
         <header>
             <h1>Bem-vindo ao Dashboard</h1>
         </header>
-        <p>Parabéns, você acessou o painel de controle!</p>
+        <p>Você acessou o painel de controle!</p>
         <button id="logoutButton">Sair</button>
     </div>
 
     <script>
-        // Verificação do token no início da página
-        const token = localStorage.getItem('token');
-        if (!token) {
-            // Redireciona para a tela de login se o token não existir
-            window.location.href = '/login.html';
-        }
+        // Função para validar o token no servidor
+        const validateToken = async () => {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                // Redirecionar para a página de login se não houver token
+                alert('Você precisa estar logado para acessar esta página.');
+                window.location.href = '/login.html';
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/validate-token', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}` // Envia o token no cabeçalho
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('Token inválido ou expirado. Faça login novamente.');
+                }
+
+                // Opcional: processar os dados do usuário retornados pelo servidor
+                const data = await response.json();
+                console.log('Usuário autenticado:', data.user);
+
+            } catch (error) {
+                alert(error.message);
+                localStorage.removeItem('token'); // Remove o token inválido
+                window.location.href = '/login.html'; // Redireciona para a página de login
+            }
+        };
+
+        // Chamada inicial para validar o token
+        validateToken();
 
         // Lógica para logout
         document.getElementById('logoutButton').addEventListener('click', () => {
-            localStorage.removeItem('token'); // Remove o token
-            window.location.href = '/login.html'; // Redireciona para a tela de login
+            localStorage.removeItem('token'); // Remove o token do localStorage
+            window.location.href = '/login.html'; // Redirecionar para a página de login
         });
     </script>
 </body>
